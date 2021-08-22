@@ -15,8 +15,12 @@ function parseFiles(rawFiles) {
 
 function parseForks(forksData) {
   let users = [];
-  for (let fork of forksData) {
+  let limit = 3;
+  for (let fork of forksData.reverse()) {
     users.push(fork.owner.login);
+    if(users.length === limit){
+        break;
+    }    
   }
   return users;
 }

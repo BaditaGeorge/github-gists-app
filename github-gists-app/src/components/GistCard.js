@@ -39,36 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 function GistCard(props) {
   const classes = useStyles();
-  //   let modalPart = CreateModal();
-  let dataStr = `let a = 10;
-    console.log(a);
-    let a = 10;let a = 10;let a = 10;let a = 10;let a = 10;let a = 10;let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);
-    let a = 10;
-    console.log(a);`;
-
+  
   return (
     <div style={{ marginBottom: "20px" }}>
       <Card className={classes.root}>
@@ -101,7 +72,6 @@ function GistCard(props) {
                     userName={props.data.userName}
                     fileName={fileData.fileName}
                     tag={fileData.tag}
-                    content={dataStr}
                     rawContentUrl={fileData.rawContent}
                   ></CreateModal>
                 ))}
