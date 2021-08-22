@@ -24,6 +24,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import ApiConsumer from "../utils/ApiConsumer";
 
 const useModalStyles = makeStyles((theme) => ({
   modal: {
@@ -45,18 +46,26 @@ const useModalStyles = makeStyles((theme) => ({
     display: "flex",
     flex: "wrap",
     flexDirection: "row",
-  }
+  },
 }));
+
+
 
 function GistModal(props) {
   const classes = useModalStyles();
   const [open, setOpen] = useState(false);
   let [btnColor, setBtnColor] = useState("primary");
   let [checked, setChecked] = useState(true);
+  let [content, setContent] = useState("");
   const notify = () => toast("Copied to clipboard!");
 
   const handleOpen = () => {
-    setOpen(true);
+    if (content.length === 0) {
+      console.log(props.rawContentUrl);
+      ApiConsumer.readBody(props.rawContentUrl,setContent,setOpen);
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -92,7 +101,7 @@ function GistModal(props) {
               <h3>
                 {props.userName}/{props.fileName}
               </h3>
-              <CopyToClipboard text={props.content}>
+              <CopyToClipboard text={content}>
                 <IconButton
                   onClick={notify}
                   color={btnColor}
@@ -122,7 +131,7 @@ function GistModal(props) {
               style={dark}
               showLineNumbers={checked}
             >
-              {props.content}
+              {content}
             </SyntaxHighlighter>
           </div>
         </Fade>

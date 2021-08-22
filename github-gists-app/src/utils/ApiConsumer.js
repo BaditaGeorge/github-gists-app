@@ -38,6 +38,7 @@ function parseGist(rawData, forksArr) {
 const ApiConsumer = {
   fetchUsersGists: (userName, page, setGistsArray) => {
     let per_page = 5;
+    console.log(page);
     const baseUrl = `https://api.github.com/users/${userName}/gists?page=${page}&per_page=${per_page}`;
     let gists = [];
 
@@ -53,7 +54,6 @@ const ApiConsumer = {
                   let gistData = parseGist(entry, parseForks(forks));
                   gists.push(gistData);
                   if (gists.length === numOfResults) {
-                    console.log(gists);
                     setGistsArray(gists);
                   }
                 });
@@ -64,6 +64,45 @@ const ApiConsumer = {
       }
     });
   },
+  readBody: (uri, setContent, setOpen) => {
+    fetch(uri)
+      .then((response) => response.body)
+      .then((rb) => {
+        const reader = rb.getReader();
+  
+        return new ReadableStream({
+          start(controller) {
+            // The following function handles each data chunk
+            function push() {
+              // "done" is a Boolean and value a "Uint8Array"
+              reader.read().then(({ done, value }) => {
+                // If there is no more data to read
+                if (done) {
+                  controller.close();
+                  return;
+                }
+                // Get the data and send it to the browser via the controller
+                controller.enqueue(value);
+                // Check chunks by logging to the console
+                push();
+              });
+            }
+  
+            push();
+          },
+        });
+      })
+      .then((stream) => {
+        // Respond with our stream
+        return new Response(stream, {
+          headers: { "Content-Type": "text/html" },
+        }).text();
+      })
+      .then(result => {
+          setContent(result);
+          setOpen(true);
+      });
+  }
 };
 
 export default ApiConsumer;

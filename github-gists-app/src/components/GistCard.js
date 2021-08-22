@@ -80,7 +80,7 @@ function GistCard(props) {
             Created at {props.data.createdAt}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Created at {props.data.updatedAt}
+            Updated at {props.data.updatedAt}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Forks: {props.data.forks.length === 0 ? "None" : props.data.forks}
@@ -102,22 +102,12 @@ function GistCard(props) {
                     fileName={fileData.fileName}
                     tag={fileData.tag}
                     content={dataStr}
+                    rawContentUrl={fileData.rawContent}
                   ></CreateModal>
                 ))}
               </List>
             </AccordionDetails>
           </Accordion>
-          {/* <List component="nav" className={classes.lst}>
-            <Divider />
-            {props.data.files.map((fileData) => (
-              <CreateModal
-                userName={props.data.userName}
-                fileName={fileData.fileName}
-                tag={fileData.tag}
-                content={dataStr}
-              ></CreateModal>
-            ))}
-          </List> */}
         </CardContent>
       </Card>
     </div>
