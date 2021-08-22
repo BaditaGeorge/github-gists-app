@@ -40,8 +40,6 @@ const useModalStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function GistModal(props) {
   const classes = useModalStyles();
   const [open, setOpen] = useState(false);
@@ -51,12 +49,7 @@ function GistModal(props) {
   const notify = () => toast("Copied to clipboard!");
 
   const handleOpen = () => {
-    if (content.length === 0) {
-      console.log(props.rawContentUrl);
-      ApiConsumer.readBody(props.rawContentUrl,setContent,setOpen);
-    } else {
-      setOpen(true);
-    }
+    ApiConsumer.readBody(props.rawContentUrl, setContent, setOpen);
   };
 
   const handleClose = () => {
