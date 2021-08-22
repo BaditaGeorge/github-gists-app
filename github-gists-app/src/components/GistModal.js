@@ -20,6 +20,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 
 const useModalStyles = makeStyles((theme) => ({
   modal: {
@@ -41,7 +45,7 @@ const useModalStyles = makeStyles((theme) => ({
     display: "flex",
     flex: "wrap",
     flexDirection: "row",
-  },
+  }
 }));
 
 function GistModal(props) {
@@ -61,9 +65,15 @@ function GistModal(props) {
 
   return (
     <>
-      <Button onClick={handleOpen} size="small" color="primary">
+      {/* <Button onClick={handleOpen} size="small" color="primary">
         View File
-      </Button>
+      </Button> */}
+      <ListItem onClick={handleOpen} button divider>
+        <ListItemText
+          primary={props.fileName}
+          secondary={"tag:" + props.tag}
+        ></ListItemText>
+      </ListItem>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -79,7 +89,9 @@ function GistModal(props) {
         <Fade in={open}>
           <div className={classes.paper}>
             <div className={classes.top}>
-              <h3>{props.userName}/{props.fileName}</h3>
+              <h3>
+                {props.userName}/{props.fileName}
+              </h3>
               <CopyToClipboard text={props.content}>
                 <IconButton
                   onClick={notify}

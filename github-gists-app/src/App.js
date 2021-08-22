@@ -13,11 +13,13 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import GistCard from './components/GistCard';
+import ApiConsumer from "./utils/ApiConsumer";
 
 
 
 function App() {
   let [gists, setGists] = useState([]);
+  let [user,setUser] = useState('');
   let forks = 'Mihai, Ana';
 
   return (
@@ -28,10 +30,11 @@ function App() {
           label="Username"
           variant="outlined"
           style={{ width: "325px" }}
+          onChange={(e)=>{console.log(e.target.value);setUser(e.target.value);}}
         />
         <IconButton
           onClick={() => {
-            console.log("clicked");
+            ApiConsumer.fetchUsersGists(user,5,setGists);
           }}
           color="primary"
           aria-label="upload picture"
@@ -41,7 +44,9 @@ function App() {
         </IconButton>
       </div>
       <div class="content">
-          <GistCard></GistCard>
+          {
+            gists.map(el => <GistCard data={el}></GistCard>)
+          }
       </div>
     </div>
   );
